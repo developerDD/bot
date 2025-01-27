@@ -2,7 +2,7 @@ require('dotenv').config(); // Завантажуємо змінні серед�
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs');
-
+const chromium = require("chrome-aws-lambda");
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
