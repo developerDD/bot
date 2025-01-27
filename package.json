@@ -5,8 +5,10 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
+    "postinstall": "rm -rf node_modules && npm install"
   },
 "dependencies": {
+  "puppeteer": "^22.8.2",
   "puppeteer-core": "^22.8.2",
   "chrome-aws-lambda": "^10.1.0",
   "whatsapp-web.js": "^1.19.4",
