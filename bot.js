@@ -1,11 +1,11 @@
-const { Client, LocalAuth } = require('whatsapp-web.js');
+require('dotenv').config(); // Додаємо підтримку .env
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs');
 
 const client = new Client({
-    authStrategy: new LocalAuth(),
     puppeteer: {
-        headless: true, 
+        headless: true,
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -16,31 +16,18 @@ const client = new Client({
             "--single-process",
             "--disable-gpu"
         ]
-    }
+    },
+    authStrategy: new LocalAuth()
 });
-
-let settings = {
-    totalPeople: null,
-    drinkers: null,
-    bathCost: null,
-    expenses: [],
-    waitingFor: null
-};
-
-// Завантаження збережених даних
-if (fs.existsSync("data.json")) {
-    settings = JSON.parse(fs.readFileSync("data.json"));
-}
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
+    console.log("🔹 QR-код для авторизації відображено");
 });
 
 client.on('ready', () => {
     console.log('✅ Бот готовий до роботи!');
 });
-
-client.initialize();
 
 client.on('message', async msg => {
     let text = msg.body.trim().toLowerCase();
