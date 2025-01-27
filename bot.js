@@ -6,18 +6,9 @@ const chromium = require("chrome-aws-lambda");
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
+        executablePath: await chromium.executablePath, // Використовуємо AWS Chrome
         headless: true,
-        executablePath: require("puppeteer").executablePath(),
-        args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-            "--disable-dev-shm-usage",
-            "--disable-accelerated-2d-canvas",
-            "--no-first-run",
-            "--no-zygote",
-            "--single-process",
-            "--disable-gpu"
-        ]
+        args: chromium.args, // Додаємо аргументи Puppeteer для роботи у Railway
     }
 });
 
